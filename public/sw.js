@@ -4,17 +4,20 @@
 // versions and lets `activate` purge the previous deploy's cached chunks. In dev the SW
 // is never registered (PROD-gated in main.tsx), so the unreplaced literal is harmless.
 const CACHE_VERSION = 'freecut-app-shell-__FREECUT_BUILD_ID__'
+// The SW may be served under a sub-path (Color & Noise hosts FreeCut at /video/);
+// everything it caches is relative to its own scope.
+const BASE = new URL('./', self.location.href).pathname
 const APP_SHELL_URLS = [
-  '/',
-  '/index.html',
-  '/favicon.svg',
-  '/manifest.webmanifest',
-  '/icons/icon-192.png',
-  '/icons/icon-512.png',
-  '/icons/icon-maskable-512.png',
+  BASE,
+  BASE + 'index.html',
+  BASE + 'favicon.svg',
+  BASE + 'manifest.webmanifest',
+  BASE + 'icons/icon-192.png',
+  BASE + 'icons/icon-512.png',
+  BASE + 'icons/icon-maskable-512.png',
 ]
 const CACHEABLE_DESTINATIONS = new Set(['document', 'script', 'style', 'font', 'image'])
-const EXCLUDED_PATH_PREFIXES = ['/moss-tts/']
+const EXCLUDED_PATH_PREFIXES = [BASE + 'moss-tts/']
 const MAX_DYNAMIC_CACHE_ENTRIES = 160
 
 self.addEventListener('install', (event) => {

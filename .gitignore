@@ -107,3 +107,4 @@ artifacts/
 
 # Headless coverage feed for the Fallow changed-health gate
 .coverage/
+.env*

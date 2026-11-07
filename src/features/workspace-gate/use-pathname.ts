@@ -12,6 +12,7 @@
  */
 
 import { useSyncExternalStore } from 'react'
+import { stripBasePath } from '@/shared/base-path'
 
 type PathnameListener = () => void
 
@@ -51,7 +52,7 @@ function subscribe(listener: PathnameListener): () => void {
 }
 
 function getSnapshot(): string {
-  return typeof window === 'undefined' ? '/' : window.location.pathname
+  return typeof window === 'undefined' ? '/' : stripBasePath(window.location.pathname)
 }
 
 function getServerSnapshot(): string {

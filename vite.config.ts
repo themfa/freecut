@@ -34,7 +34,7 @@ function serviceWorkerVersionPlugin(): Plugin {
         this.warn('serviceWorkerVersionPlugin: no main entry chunk found; sw.js not stamped')
         return
       }
-      const swPath = join(fileURLToPath(new URL('./dist', import.meta.url)), 'sw.js')
+      const swPath = join(fileURLToPath(new URL(`./${outDir}`, import.meta.url)), 'sw.js')
       const source = readFileSync(swPath, 'utf8')
       if (!source.includes(placeholder)) {
         return
@@ -55,8 +55,14 @@ const toolIgnorePatterns = [
   'scripts/**',
 ]
 
+// Color & Noise integration: FREECUT_BASE (with trailing slash, e.g. "/video/") builds every
+// asset and route under that base into dist/<base>, so the host app can route /video/* here.
+const freecutBase = process.env.FREECUT_BASE ?? '/'
+const outDir = freecutBase === '/' ? 'dist' : `dist${freecutBase.replace(/\/$/, '')}`
+
 // https://vite.dev/config/
 export default defineConfig({
+  base: freecutBase,
   lint: {
     ...oxlintConfig,
     ignorePatterns: toolIgnorePatterns,
@@ -123,6 +129,7 @@ export default defineConfig({
     },
   },
   build: {
+    outDir,
     target: 'esnext',
     sourcemap: true,
     // @mediabunny/ac3 is an intentionally large lazy decoder bundle (~1.1 MB minified).

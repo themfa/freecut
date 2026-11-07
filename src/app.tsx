@@ -1,5 +1,6 @@
 import { Suspense, lazy, useEffect, useState } from 'react'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
+import { BASE_PATH } from '@/shared/base-path'
 import { GlobalTooltip } from '@/components/ui/global-tooltip'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { ErrorBoundary } from '@/components/error-boundary'
@@ -11,7 +12,12 @@ import { routeTree } from './routeTree.gen'
 // Route errors (thrown from beforeLoad/loader) never reach the React
 // ErrorBoundary below — TanStack catches them first. Without this, they render
 // its untranslated built-in fallback with the message hidden in production.
-const router = createRouter({ routeTree, defaultErrorComponent: RouteErrorScreen })
+const router = createRouter({
+  routeTree,
+  defaultErrorComponent: RouteErrorScreen,
+  // Served under a sub-path when embedded in Color & Noise (see shared/base-path.ts).
+  ...(BASE_PATH ? { basepath: BASE_PATH } : {}),
+})
 const LazyToaster = lazy(async () => {
   const { Toaster } = await import('@/components/ui/sonner')
   return { default: Toaster }

@@ -1,3 +1,4 @@
+import { withBasePath } from '@/shared/base-path'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
@@ -340,7 +341,7 @@ function LandingPage() {
               <picture>
                 <source srcSet="/assets/landing/main.webp" type="image/webp" />
                 <img
-                  src="/assets/landing/main.png"
+                  src={withBasePath('/assets/landing/main.png')}
                   alt={t('projects.landing.demoPreviewAlt')}
                   loading="lazy"
                   decoding="async"

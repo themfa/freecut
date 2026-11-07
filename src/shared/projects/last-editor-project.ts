@@ -1,3 +1,4 @@
+import { stripBasePath } from '@/shared/base-path'
 const LAST_EDITOR_PROJECT_ID_KEY = 'freecut-last-editor-project-id'
 
 function safeDecodeURIComponent(value: string): string {
@@ -34,7 +35,11 @@ export function getEditorProjectReloadPathWithCacheBust(): string {
   const currentProjectId = getEditorProjectIdFromPathname(nextUrl.pathname)
   const projectId = currentProjectId ?? getLastEditorProjectId()
 
-  if (projectId && !currentProjectId && (nextUrl.pathname === '/' || nextUrl.pathname === '')) {
+  if (
+    projectId &&
+    !currentProjectId &&
+    (stripBasePath(nextUrl.pathname) === '/' || nextUrl.pathname === '')
+  ) {
     nextUrl.pathname = `/editor/${encodeURIComponent(projectId)}`
   }
 

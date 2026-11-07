@@ -1,4 +1,5 @@
 import { StrictMode } from 'react'
+import { BASE_URL, stripBasePath } from '@/shared/base-path'
 import { createRoot } from 'react-dom/client'
 import { i18n, i18nReady } from './i18n'
 import { App } from './app'
@@ -23,13 +24,13 @@ if (import.meta.env.DEV) {
   void import('@/app/debug').then(({ initializeDebugUtils }) => initializeDebugUtils())
 }
 
-const initialProjectId = getEditorProjectIdFromPathname(window.location.pathname)
+const initialProjectId = getEditorProjectIdFromPathname(stripBasePath(window.location.pathname))
 if (initialProjectId) {
   rememberLastEditorProjectId(initialProjectId)
 }
 
 function getCurrentProjectId(): string | undefined {
-  return getEditorProjectIdFromPathname(window.location.pathname)
+  return getEditorProjectIdFromPathname(stripBasePath(window.location.pathname))
 }
 
 async function saveCurrentProjectBeforeReload(): Promise<boolean> {
@@ -276,7 +277,7 @@ window.addEventListener('vite:preloadError', (event) => {
 if (import.meta.env.PROD && 'serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker
-      .register('/sw.js')
+      .register(`${BASE_URL}sw.js`, { scope: BASE_URL })
       .then((registration) => {
         watchForServiceWorkerUpdate(registration)
         registration.update().catch((error: unknown) => {

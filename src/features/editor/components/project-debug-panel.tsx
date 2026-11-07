@@ -5,6 +5,7 @@
  * Visibility is controlled by the parent DebugPopover component.
  */
 
+import { withBasePath } from '@/shared/base-path'
 import { useState, useCallback, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { createLogger } from '@/shared/logging/logger'
@@ -121,7 +122,7 @@ export function ProjectDebugPanel({ projectId }: ProjectDebugPanelProps) {
     const { importProjectFromClipboard } = await importJsonImportService()
     const result = await importProjectFromClipboard()
     // Reload to show new project
-    window.location.href = `/editor/${result.project.id}`
+    window.location.href = withBasePath(`/editor/${result.project.id}`)
   }, [])
 
   const handleImportFromFile = useCallback(async () => {
@@ -129,7 +130,7 @@ export function ProjectDebugPanel({ projectId }: ProjectDebugPanelProps) {
     const result = await showImportFilePicker()
     if (result) {
       // Reload to show new project
-      window.location.href = `/editor/${result.project.id}`
+      window.location.href = withBasePath(`/editor/${result.project.id}`)
     }
   }, [])
 
@@ -225,7 +226,7 @@ export function ProjectDebugPanel({ projectId }: ProjectDebugPanelProps) {
     await createProject(project)
 
     // Navigate to the new project
-    window.location.href = `/editor/${project.id}`
+    window.location.href = withBasePath(`/editor/${project.id}`)
   }, [selectedFixture])
 
   const handleDownloadFixture = useCallback(async () => {
