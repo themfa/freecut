@@ -38,3 +38,12 @@ body {
   font-family: ui-sans-serif, system-ui, -apple-system, "SF Pro Text", "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
 }
+
+/* Inside Color & Noise the host owns the workspace folder and the exits:
+   FreeCut's language switcher, Docs, Discord, GitHub and its workspace
+   switcher are hidden. Layout-only, matched by attributes FreeCut sets. */
+button[aria-label="Interface language"],
+a[href$="/docs"],
+a[href*="discord.gg"],
+a[href*="github.com/walterlow"],
+button[data-tooltip="Workspace folder"] { display: none !important; }
