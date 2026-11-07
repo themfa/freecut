@@ -43,56 +43,56 @@ const showcaseItems = [
     titleKey: 'projects.landing.showcase.timeline.title',
     descriptionKey: 'projects.landing.showcase.timeline.description',
     icon: Layers,
-    media: '/assets/landing/timeline.png',
+    media: withBasePath('/assets/landing/timeline.png'),
   },
   {
     id: 'keyframe',
     titleKey: 'projects.landing.showcase.keyframe.title',
     descriptionKey: 'projects.landing.showcase.keyframe.description',
     icon: Play,
-    media: '/assets/landing/dopesheet.png',
+    media: withBasePath('/assets/landing/dopesheet.png'),
   },
   {
     id: 'semantic',
     titleKey: 'projects.landing.showcase.semantic.title',
     descriptionKey: 'projects.landing.showcase.semantic.description',
     icon: Search,
-    media: '/assets/landing/semantic.png',
+    media: withBasePath('/assets/landing/semantic.png'),
   },
   {
     id: 'export',
     titleKey: 'projects.landing.showcase.export.title',
     descriptionKey: 'projects.landing.showcase.export.description',
     icon: Download,
-    media: '/assets/landing/export.png',
+    media: withBasePath('/assets/landing/export.png'),
   },
   {
     id: 'audioEq',
     titleKey: 'projects.landing.showcase.audioEq.title',
     descriptionKey: 'projects.landing.showcase.audioEq.description',
     icon: AudioLines,
-    media: '/assets/landing/eq.png',
+    media: withBasePath('/assets/landing/eq.png'),
   },
   {
     id: 'hotkeys',
     titleKey: 'projects.landing.showcase.hotkeys.title',
     descriptionKey: 'projects.landing.showcase.hotkeys.description',
     icon: Keyboard,
-    media: '/assets/landing/hotkeys.png',
+    media: withBasePath('/assets/landing/hotkeys.png'),
   },
   {
     id: 'motion',
     titleKey: 'projects.landing.showcase.motion.title',
     descriptionKey: 'projects.landing.showcase.motion.description',
     icon: WandSparkles,
-    media: '/assets/landing/motion.png',
+    media: withBasePath('/assets/landing/motion.png'),
   },
   {
     id: 'colorGrade',
     titleKey: 'projects.landing.showcase.colorGrade.title',
     descriptionKey: 'projects.landing.showcase.colorGrade.description',
     icon: Palette,
-    media: '/assets/landing/colorgrade.png',
+    media: withBasePath('/assets/landing/colorgrade.png'),
   },
 ]
 
@@ -339,7 +339,7 @@ function LandingPage() {
           >
             <div className="relative aspect-video w-full overflow-hidden bg-muted">
               <picture>
-                <source srcSet="/assets/landing/main.webp" type="image/webp" />
+                <source srcSet={withBasePath('/assets/landing/main.webp')} type="image/webp" />
                 <img
                   src={withBasePath('/assets/landing/main.png')}
                   alt={t('projects.landing.demoPreviewAlt')}
