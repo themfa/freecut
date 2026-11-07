@@ -1,0 +1,40 @@
+/* Color & Noise theme for FreeCut (Color & Noise DECISIONS.md 65).
+   Loaded after FreeCut's own stylesheet, so these token values win. Only
+   tokens, type and radius change; no component rule is overridden. The host
+   is a warm near-black with quiet, tonal accents: the orange primary becomes
+   a warm white, borders become the host's self-coloured lip of light. */
+:root {
+  --background: #0b0a0a;
+  --foreground: #f4f4f5;
+  --card: #141312;
+  --card-foreground: #ececec;
+  --popover: #131211;
+  --popover-foreground: #ececec;
+  --primary: #e6dccb;
+  --primary-foreground: #131211;
+  --secondary: #1d1b1a;
+  --secondary-foreground: #e0e0e0;
+  --muted: #191817;
+  --muted-foreground: #9a9a9a;
+  --accent: #232120;
+  --accent-foreground: #f4f4f5;
+  --destructive: #d9655a;
+  --destructive-foreground: #fafafa;
+  --border: rgb(255 255 255 / 0.08);
+  --input: rgb(255 255 255 / 0.1);
+  --ring: #e6dccb;
+  --sidebar: #0f0e0e;
+  --sidebar-foreground: #ececec;
+  --sidebar-primary: #e6dccb;
+  --sidebar-primary-foreground: #131211;
+  --sidebar-accent: #1d1b1a;
+  --sidebar-accent-foreground: #f4f4f5;
+  --sidebar-border: rgb(255 255 255 / 0.08);
+  --sidebar-ring: #e6dccb;
+  --radius: 0.875rem;
+}
+
+body {
+  font-family: ui-sans-serif, system-ui, -apple-system, "SF Pro Text", "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
