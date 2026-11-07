@@ -19,7 +19,7 @@
  * back to the Reconnect state mid-session.
  */
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   ensureKnownWorkspaceForCurrent,
@@ -33,6 +33,7 @@ import { onPermissionLost, setWorkspaceRoot } from '@/infrastructure/storage/wor
 import { createLogger } from '@/shared/logging/logger'
 import { WorkspaceGateSplash } from './workspace-gate-splash'
 import { usePathname } from './use-pathname'
+import { isEmbedded } from '@/shared/embedded'
 
 /**
  * Routes that read/write the workspace and therefore need the gate to be
@@ -78,6 +79,56 @@ export function WorkspaceGate({ children }: { children: React.ReactNode }) {
     setStatus({ kind: 'ready' })
     window.dispatchEvent(new Event('freecut:ensure-toaster'))
   }, [])
+
+  // Color & Noise integration: when framed by the host app (same origin), the
+  // host owns the workspace folder and hands its directory handle over, so
+  // the user is never asked twice. The gate announces itself, the host posts
+  // `{type: 'colornoise:workspace', handle}`, and we adopt that handle exactly
+  // as if it had been picked here (persisted, bootstrapped, activated). A
+  // later message with a different folder switches the workspace and
+  // reloads, like the workspace switcher does.
+  const statusRef = useRef(status)
+  statusRef.current = status
+  const adoptHostWorkspace = useCallback(
+    async (handle: FileSystemDirectoryHandle) => {
+      const permission = await queryHandlePermission(handle)
+      if (permission !== 'granted') {
+        logger.warn('Host workspace handle has no permission; leaving the gate as is')
+        return
+      }
+      const current = await getWorkspaceHandleRecord()
+      const currentHandle = current?.handle as FileSystemDirectoryHandle | undefined
+      const same = currentHandle
+        ? await currentHandle.isSameEntry(handle).catch(() => false)
+        : false
+      if (statusRef.current.kind === 'ready') {
+        if (same) return
+        await saveWorkspaceHandleRecord(handle)
+        window.location.reload()
+        return
+      }
+      await saveWorkspaceHandleRecord(handle)
+      await activate(handle)
+    },
+    [activate],
+  )
+
+  useEffect(() => {
+    if (!needsWorkspace || !isEmbedded()) return
+    const onMessage = (event: MessageEvent) => {
+      if (event.source !== window.parent || event.origin !== window.location.origin) return
+      const data = event.data as { type?: string; handle?: FileSystemDirectoryHandle } | null
+      if (!data || data.type !== 'colornoise:workspace' || !data.handle) return
+      void adoptHostWorkspace(data.handle).catch((error: unknown) => {
+        logger.error('Adopting the host workspace failed', error)
+      })
+    }
+    window.addEventListener('message', onMessage)
+    window.parent.postMessage({ type: 'freecut:workspace-request' }, window.location.origin)
+    return () => {
+      window.removeEventListener('message', onMessage)
+    }
+  }, [adoptHostWorkspace, needsWorkspace])
 
   // Initial load: check if we have a saved handle, check its permission.
   // Skipped on routes that never touch storage (landing page) so first paint
