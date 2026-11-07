@@ -1,5 +1,6 @@
 import { withBasePath } from '@/shared/base-path'
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { createFileRoute, Link, redirect } from '@tanstack/react-router'
+import { isEmbedded } from '@/shared/embedded'
 import { useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import {
@@ -34,6 +35,10 @@ import {
 } from '@/components/ui/accordion'
 
 export const Route = createFileRoute('/')({
+  // Framed by Color & Noise: the editor is the entry, not the landing page.
+  beforeLoad: () => {
+    if (isEmbedded()) throw redirect({ to: '/projects' })
+  },
   component: LandingPage,
 })
 

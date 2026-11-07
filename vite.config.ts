@@ -44,6 +44,19 @@ function serviceWorkerVersionPlugin(): Plugin {
   }
 }
 
+// Color & Noise integration: a based (embedded) build must not reach out to Google Fonts;
+// the host supplies the type via its theme stylesheet. Drops the preconnect and stylesheet links.
+function stripGoogleFontsPlugin(): Plugin {
+  return {
+    name: 'freecut-strip-google-fonts',
+    apply: 'build',
+    transformIndexHtml(html) {
+      if (!process.env.FREECUT_BASE) return html
+      return html.replace(/\s*<link[^>]+fonts\.g(oogleapis|static)\.com[^>]*>/g, '')
+    },
+  }
+}
+
 const oxlintConfig = JSON.parse(readFileSync(new URL('./.oxlintrc.json', import.meta.url), 'utf8'))
 const oxfmtConfig = JSON.parse(readFileSync(new URL('./.oxfmtrc.json', import.meta.url), 'utf8'))
 const toolIgnorePatterns = [
@@ -102,7 +115,12 @@ export default defineConfig({
       },
     },
   },
-  plugins: lazyPlugins(() => [react(), tailwindcss(), serviceWorkerVersionPlugin()]),
+  plugins: lazyPlugins(() => [
+    react(),
+    tailwindcss(),
+    serviceWorkerVersionPlugin(),
+    stripGoogleFontsPlugin(),
+  ]),
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
