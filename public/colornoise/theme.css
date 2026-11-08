@@ -1,8 +1,11 @@
 /* Color & Noise theme for FreeCut (Color & Noise DECISIONS.md 65).
    Loaded after FreeCut's own stylesheet, so these token values win. Only
    tokens, type and radius change; no component rule is overridden. The host
-   is a warm near-black with quiet, tonal accents: the orange primary becomes
-   a warm white, borders become the host's self-coloured lip of light. */
+   is a warm near-black with quiet, tonal accents: the orange primary takes
+   the host's primary recipe (a near-white fill with near-black text, the
+   same as its own primary button), borders become the host's self-coloured
+   lip of light. The host's cream is reserved for one meaning, "live", and
+   is not used here. */
 :root {
   --background: #0b0a0a;
   --foreground: #f4f4f5;
@@ -10,8 +13,8 @@
   --card-foreground: #ececec;
   --popover: #131211;
   --popover-foreground: #ececec;
-  --primary: #e6dccb;
-  --primary-foreground: #131211;
+  --primary: #f4f4f5;
+  --primary-foreground: #0b0a0a;
   --secondary: #1d1b1a;
   --secondary-foreground: #e0e0e0;
   --muted: #191817;
@@ -22,15 +25,15 @@
   --destructive-foreground: #fafafa;
   --border: rgb(255 255 255 / 0.08);
   --input: rgb(255 255 255 / 0.1);
-  --ring: #e6dccb;
+  --ring: rgb(255 255 255 / 0.7);
   --sidebar: #0f0e0e;
   --sidebar-foreground: #ececec;
-  --sidebar-primary: #e6dccb;
-  --sidebar-primary-foreground: #131211;
+  --sidebar-primary: #f4f4f5;
+  --sidebar-primary-foreground: #0b0a0a;
   --sidebar-accent: #1d1b1a;
   --sidebar-accent-foreground: #f4f4f5;
   --sidebar-border: rgb(255 255 255 / 0.08);
-  --sidebar-ring: #e6dccb;
+  --sidebar-ring: rgb(255 255 255 / 0.7);
   --radius: 0.5rem;
   --font-sans: ui-sans-serif, system-ui, -apple-system, "SF Pro Text", "Segoe UI", sans-serif;
 }
