@@ -35,6 +35,12 @@
   --sidebar-border: rgb(255 255 255 / 0.08);
   --sidebar-ring: rgb(255 255 255 / 0.7);
   --radius: 0.5rem;
+  /* Editor surfaces: headers and the timeline sit on the host's ground, so
+     the projects header continues the host band above it as one surface;
+     panels take the host's card tone. Same format as FreeCut's own tokens. */
+  --panel-header: oklch(0.136 0.004 55);
+  --timeline-bg: oklch(0.136 0.004 55);
+  --panel-bg: oklch(0.17 0.003 55);
   --font-sans: ui-sans-serif, system-ui, -apple-system, "SF Pro Text", "Segoe UI", sans-serif;
 }
 
