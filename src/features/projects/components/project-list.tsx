@@ -1,4 +1,5 @@
 import { useState, useMemo, useRef, useEffect, useCallback } from 'react'
+import { isEmbedded } from '@/shared/embedded'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { Search, ArrowUpDown, X, Trash2, AlertTriangle, Plus, Upload } from 'lucide-react'
@@ -466,10 +467,14 @@ export function ProjectList({ onEditProject, onImportProject }: ProjectListProps
       {isEmpty && (
         <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
           <h2 className="text-3xl font-semibold text-foreground mb-2">
-            {t('projects.list.welcomeTitle')}
+            {t(isEmbedded() ? 'projects.list.embeddedWelcomeTitle' : 'projects.list.welcomeTitle')}
           </h2>
           <p className="text-muted-foreground max-w-md mb-6">
-            {t('projects.list.welcomeDescription')}
+            {t(
+              isEmbedded()
+                ? 'projects.list.embeddedWelcomeDescription'
+                : 'projects.list.welcomeDescription',
+            )}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Button size="lg" className="gap-2" asChild>

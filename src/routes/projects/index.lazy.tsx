@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Plus, Upload, FolderOpen, File, Github, BookOpen } from 'lucide-react'
 import { FreeCutLogo } from '@/components/brand/freecut-logo'
+import { isEmbedded } from '@/shared/embedded'
 import { DiscordIcon } from '@/components/brand/discord-icon'
 import { DISCORD_INVITE_URL } from '@/config/community'
 import { ProjectList } from '@/features/projects/components/project-list'
@@ -255,13 +256,21 @@ function ProjectsIndex() {
         {/* Header */}
         <div className="panel-header border-b border-border" data-no-marquee>
           <div className="max-w-[1920px] mx-auto px-6 py-5 flex items-center justify-between">
-            <Link to="/">
-              <FreeCutLogo
-                variant="full"
-                size="md"
-                className="hover:opacity-80 transition-opacity"
-              />
-            </Link>
+            {isEmbedded() ? (
+              // Color & Noise names the environment in its own header; the
+              // page carries a plain heading, not a second brand or an exit.
+              <h1 className="text-xl font-semibold tracking-tight text-foreground">
+                {t('projects.list.embeddedHeading')}
+              </h1>
+            ) : (
+              <Link to="/">
+                <FreeCutLogo
+                  variant="full"
+                  size="md"
+                  className="hover:opacity-80 transition-opacity"
+                />
+              </Link>
+            )}
             <div className="flex items-center gap-3">
               <LanguageSwitcher size="md" align="end" side="bottom" />
 
