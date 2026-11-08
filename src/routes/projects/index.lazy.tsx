@@ -303,21 +303,27 @@ function ProjectsIndex() {
               <Separator orientation="vertical" className="h-6" />
 
               <WorkspaceIndicator />
-              <Button
-                variant="outline"
-                size="lg"
-                className="gap-2 px-4"
-                onClick={handleImportClick}
-              >
-                <Upload className="w-4 h-4" />
-                {t('projects.importProject')}
-              </Button>
-              <Link to="/projects/new">
-                <Button size="lg" className="gap-2 px-4">
-                  <Plus className="w-4 h-4" />
-                  {t('projects.newProject')}
-                </Button>
-              </Link>
+              {/* Framed by Color & Noise with no projects yet, the empty state
+                  below carries these two actions; one pair, not two. */}
+              {!(isEmbedded() && !isLoading && projects.length === 0) && (
+                <>
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="gap-2 px-4"
+                    onClick={handleImportClick}
+                  >
+                    <Upload className="w-4 h-4" />
+                    {t('projects.importProject')}
+                  </Button>
+                  <Link to="/projects/new">
+                    <Button size="lg" className="gap-2 px-4">
+                      <Plus className="w-4 h-4" />
+                      {t('projects.newProject')}
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
 
             {/* Hidden file input for import */}

@@ -116,7 +116,7 @@
       "welcomeDescription": "Get started by creating your first video project. Choose your resolution, frame rate, and start editing!",
       "embeddedHeading": "Video projects",
       "embeddedWelcomeTitle": "No video projects yet",
-      "embeddedWelcomeDescription": "Start one, or import an existing project. Edits save to the workspace folder.",
+      "embeddedWelcomeDescription": "Start one, or import an existing project.",
       "noResultsTitle": "No projects found",
       "noResultsDescription": "We couldn't find any projects matching your search criteria. Try adjusting your filters or search terms.",
       "projectCount_one": "{{count}} project",
