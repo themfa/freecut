@@ -57,3 +57,9 @@ a[href$="/docs"],
 a[href*="discord.gg"],
 a[href*="github.com/walterlow"],
 button[data-tooltip="Workspace folder"] { display: none !important; }
+
+/* From 1280px the host's Instrument monitor (128×72) sits on the editor
+   toolbar's line at its right end; the toolbar keeps that end clear. */
+@media (min-width: 1280px) {
+  .panel-header.border-b[role="toolbar"] { padding-right: 168px !important; }
+}

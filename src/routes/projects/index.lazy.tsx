@@ -100,6 +100,20 @@ function ProjectsIndex() {
     fileInputRef.current?.click()
   }
 
+  // Color & Noise's header carries New and Import for this page when framed.
+  useEffect(() => {
+    if (!isEmbedded()) return
+    const onMessage = (event: MessageEvent) => {
+      if (event.origin !== window.location.origin || event.source !== window.parent) return
+      const data = event.data as { type?: string; action?: string } | null
+      if (data?.type !== 'colornoise:action') return
+      if (data.action === 'new-project') void navigate({ to: '/projects/new' })
+      if (data.action === 'import-project') handleImportClick()
+    }
+    window.addEventListener('message', onMessage)
+    return () => window.removeEventListener('message', onMessage)
+  }, [navigate, handleImportClick])
+
   // Step 1: File selected - show destination selection dialog
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -254,7 +268,12 @@ function ProjectsIndex() {
     <>
       <div className="min-h-screen bg-background">
         {/* Header */}
-        <div className="panel-header border-b border-border" data-no-marquee>
+        {/* Framed by Color & Noise the host band is the only header: this row is
+            hidden and its two actions arrive from the host (colornoise:action). */}
+        <div
+          className={`panel-header border-b border-border${isEmbedded() ? ' hidden' : ''}`}
+          data-no-marquee
+        >
           <div className="max-w-[1920px] mx-auto px-6 py-5 flex items-center justify-between">
             {isEmbedded() ? (
               // Color & Noise names the environment in its own header; the
