@@ -63,3 +63,23 @@ button[data-tooltip="Workspace folder"] { display: none !important; }
 @media (min-width: 1280px) {
   .panel-header.border-b[role="toolbar"] { padding-right: 168px !important; }
 }
+
+/* The host's type and control scale on the framed empty state: the host's
+   card heading (15px semibold) and body (13px), 32px pill buttons, the
+   secondary one on the host's quiet fill. */
+[data-colornoise="empty-state"] h2 { font-size: 15px !important; font-weight: 600 !important; line-height: 1.3 !important; margin-bottom: 0.25rem !important; }
+[data-colornoise="empty-state"] p { font-size: 13px !important; line-height: 1.5 !important; margin-bottom: 1rem !important; }
+[data-colornoise="empty-state"] button,
+[data-colornoise="empty-state"] a {
+  height: 2rem !important;
+  padding: 0 0.875rem !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  border-radius: 9999px !important;
+}
+[data-colornoise="empty-state"] button[class*="border-input"],
+[data-colornoise="empty-state"] a[class*="border-input"] {
+  background: rgb(255 255 255 / 0.07) !important;
+  border-color: transparent !important;
+  color: #f4f4f5 !important;
+}

@@ -465,7 +465,10 @@ export function ProjectList({ onEditProject, onImportProject }: ProjectListProps
 
       {/* Empty State - No Projects */}
       {isEmpty && (
-        <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
+        <div
+          className="flex flex-col items-center justify-center py-16 px-4 text-center"
+          data-colornoise="empty-state"
+        >
           <h2 className="text-3xl font-semibold text-foreground mb-2">
             {t(isEmbedded() ? 'projects.list.embeddedWelcomeTitle' : 'projects.list.welcomeTitle')}
           </h2>
